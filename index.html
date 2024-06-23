@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convert A sentence to Ong Sentence</title>
+  <!-- add bootstrap css-->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <!-- create a fluid container with one column on all devices in a row and put a form in there with single input field called sentence and an output field in next row where result will be shown-->
+  <div class="container-fluid" id="ongapp">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1>Convert a sentence to its ong version</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+        <form>
+          <div class="form-group text-center">
+            <label for="sentence">Enter a sentence</label>
+            <input v-model="sentence" type="text" class="form-control" id="sentence" name="sentence" placeholder="Enter a sentence">
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+        <div class="form-group text-center">
+          <label for="output">Output</label>
+          <input v-model="ongsentence" type="text" class="form-control" id="output" name="output" placeholder="Output" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script>
+    const { createApp, ref, computed } = Vue
+
+    createApp({
+      setup() {
+        const sentence = ref('Enter a sentence')
+        // create a computer called result fom sentence that will add ong at end of each consonent in sentencce
+        const ongsentence = computed(() => {
+          return sentence.value.split('').map(char => {
+            if ('aeiou'.includes(char.toLowerCase())) {
+              return char
+            } else {
+              return char + 'ong'
+            }
+          }).join('')
+        });
+        return {
+          ongsentence,
+          sentence
+        }
+      }
+    }).mount('#ongapp')
+  </script>
+</body>
+</html>
